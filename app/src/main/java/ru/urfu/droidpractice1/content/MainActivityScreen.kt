@@ -258,5 +258,5 @@ fun shareArticle(context: Context, title: String, text: String) {
         type = "text/plain"
     }
     val shareIntent = Intent.createChooser(sendIntent, "Поделиться статьей")
-    context.startActivity(shareIntent)
+    context.startActivity(shareIntent)//лоло
 }
