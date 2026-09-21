@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.urfu.droidpractice1"
-        minSdk = 24 //понизили версию с 28 на 24
+        minSdk = 24 //понизили версию с 28 на 24 для Android 7.0
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

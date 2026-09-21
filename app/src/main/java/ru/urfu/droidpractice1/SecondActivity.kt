@@ -2,9 +2,10 @@ package ru.urfu.droidpractice1
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity // Важно!
+import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import ru.urfu.droidpractice1.databinding.ActivitySecondBinding
+import android.util.Log
 
 class SecondActivity : AppCompatActivity() { //класс для кэкранов в Android, разметка которых делается через XML Views
     //ActivitySecondBinding — это автосгенерированный класс на основе файла activity_second.xml.
@@ -12,10 +13,15 @@ class SecondActivity : AppCompatActivity() { //класс для кэкрано�
     //создаем переменную binding здесь, но инициализируем позже
     //Если объявить переменную внутри onCreate, она будет существовать только пока выполняется onCreate
     // Когда пользователь нажмет кнопку или галочку и вызовется другой метод, код «не увидит» эту переменную
+    private companion object {
+        private const val TAG = "Lifecycle_SecondActivity"
+    }
+
     private lateinit var binding: ActivitySecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
         binding = ActivitySecondBinding.inflate(layoutInflater) //превращает XML-файл в реальные объекты в памяти
         setContentView(binding.root) //передаёт готовое дерево отображения в окно экрана, чтобы пользователь увидел интерфейс
 
@@ -58,5 +64,34 @@ class SecondActivity : AppCompatActivity() { //класс для кэкрано�
     private fun saveResultAndFinish() {
         setReadResult(binding.cbIsRead.isChecked) //передача текущего состояния "прочитано" в метод setReadResult
         finish() //закрытие SecondActivity
+    }
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart")
     }
 }

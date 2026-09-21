@@ -52,6 +52,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.clickable
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
 
 
 @Composable //задаем интерфейс
