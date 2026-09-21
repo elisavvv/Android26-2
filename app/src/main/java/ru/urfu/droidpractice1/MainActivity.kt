@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import ru.urfu.droidpractice1.content.MainActivityScreen
+import android.content.pm.ActivityInfo
 
 class MainActivity : ComponentActivity() {
     private companion object {
@@ -12,6 +13,12 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Фиксируем портретный режим
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        // Отключаем учет датчиков поворота для данного окна
+        window.attributes = window.attributes.apply {
+            screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         //Log.d означает Debug Log (отладочный лог)
         //Функция отправляет в системный журнал Android строчку: метку TAG ("Lifecycle_MainActivity") и текст сообщения ("onCreate")
         Log.d(TAG, "onCreate")

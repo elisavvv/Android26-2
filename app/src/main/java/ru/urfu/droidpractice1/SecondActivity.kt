@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import ru.urfu.droidpractice1.databinding.ActivitySecondBinding
 import android.util.Log
+import android.content.pm.ActivityInfo
 
 class SecondActivity : AppCompatActivity() { //класс для кэкранов в Android, разметка которых делается через XML Views
     //ActivitySecondBinding — это автосгенерированный класс на основе файла activity_second.xml.
@@ -21,6 +22,12 @@ class SecondActivity : AppCompatActivity() { //класс для кэкрано�
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Фиксируем портретный режим
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        // Отключаем учет датчиков поворота для данного окна
+        window.attributes = window.attributes.apply {
+            screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         Log.d(TAG, "onCreate")
         binding = ActivitySecondBinding.inflate(layoutInflater) //превращает XML-файл в реальные объекты в памяти
         setContentView(binding.root) //передаёт готовое дерево отображения в окно экрана, чтобы пользователь увидел интерфейс
