@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> <!--документ XML в кодировке UTF-8-->
+<!--
+- корневой контейнер экрана, который выстраивает все находящиеся внутри него элементы в один столбик друг под другом
+- xmlns:app задает свойства сторонних библиотек или AppCompat
+- android:id="@+id/main" — уникальный идентификатор самого верхнего контейнера экрана
+- android:layout_width="match_parent" и android:layout_height="match_parent" — заставляют контейнер занять 100% ширины и высоты экрана телефона
+- android:background="#FFFFFF" — устанавливает белый цвет фона для всего экрана
+
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,13 +14,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     tools:context=".SecondActivity">
-
-    <Toolbar
+    <!--
+    - androidx.appcompat.widget.Toolbar — верхняя шапка экрана (аналог TopAppBar из Compose, только для классических XML Views
+    - android:id="@+id/toolbar" — ID, по которому мы обращаемся к шапке в Kotlin-коде
+    - android:layout_height="wrap_content" — высота шапки подстраивается под её содержимое
+    - app:navigationIcon="?attr/homeAsUpIndicator" — добавляет слева от заголовка стандартную системную иконку стрелочки «Назад»
+    -->
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/article_title"
-        android:navigationIcon="@drawable/arrow_back" />
+        android:background="?attr/colorPrimary"
+        app:title="Статья о коте"
+        app:titleTextColor="@android:color/black"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+    <!--
+   - ScrollView - контейнер для скроллинга
+   - ScrollView благодаря layout_weight="1" забирает всё оставшееся свободное место на экране снизу под шапкой
+   -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!--
+        - LinearLayout контейнер, группирующий заголовок, текст, картинку статьи
+        - android:layout_width="match_parent" — растягивается на всю ширину экрана.
+        - android:layout_height="wrap_content" — высота контейнера подстраивается под его содержимое (растет вниз по мере добавления элементов)
+        - android:orientation="vertical" — размещает элементы внутри себя строго друг под другом
+        - android:padding="16dp" - внутренний отступ 16 dp со всех четырех сторон от краев экрана, поэтому текст статьи и картинка не прилипают вплотную к границам дисплея
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Заголовок статьи с выравниванием по центру
+            - android:layout_width="match_parent" — текстовое поле занимает всю доступную ширину контейнера (с учетом боковых отступов 16dp)
+            - android:layout_height="wrap_content" — высота текстового поля автоматически увеличивается в зависимости от количества строк текста
+             android:textStyle="bold"  - жирный
+             android:gravity="center" - по центру
+             - android:lineSpacingExtra="4dp" — добавляет дополнительный межстрочный интервал 4 dp между строчками заголовка
+             -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Зачем ежу GPS-трекер? Спасти популяцию британских ежей помогут спутники и ИИ"
+                android:textColor="#283593"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp" />
+            <!-- дата со стилем курсивом
+            android:textStyle="italic" - курсив
+            android:gravity="end" - выравнивание по правому краю
+            -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text=" 19 мая 2026 • 3 мин чтения"
+                android:textColor="#757575"
+                android:textSize="13sp"
+                android:textStyle="italic"
+                android:gravity="end" />
+
+            <!-- Изображение статьи
+             - android:id="@+id/ivHedgehogImage" идентификатор элемента ImageView в XML-разметке
+             Благодаря этому ID можно обратиться к картинке из SecondActivity.kt , чтобы, загрузить в неё изображение из интернета с помощью Coil
+             android:scaleType="centerCrop" - режим обрезки/заполнения картинки на странице
+             -->
+            <ImageView
+                android:id="@+id/ivHedgehogImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Еж с трекером" />
+
+            <!-- Выделенный вводный абзац -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Исследователи из Кембриджского университета надеются замедлить снижение численности популяции британских ежей при помощи информации со спутников и искусственного интеллекта."
+                android:textColor="#9C27B0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Основной текст -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Они применяют основанный на технологии ИИ мощный инструмент Tessera, который анализирует данные о британских ежах, собранные при помощи спутников. Таким образом ученые могут точно определить места обитания ежей на территории Великобритании, а также районы, в которых их существование оказалось под угрозой."
+                android:textColor="#4CAF50"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Цитата / важный факт в рамке/выделении -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFC107"
+                android:padding="12dp"
+                android:text="«Результатом работы стали карты, изображающие ландшафт страны вплоть до каждой отдельной зеленой изгороди.»"
+                android:textColor="#C2185B"
+                android:textSize="14sp"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Результаты работы ИИ сочетаются со сведениями, полученными от крошечных GPS-трекеров, которые ученые ставят на ежей для отслеживания их передвижений в реальном времени."
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Переключатель "Прочитано" -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#E8EAF6"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Отметить как прочитанную:"
+                    android:textColor="#1A237E"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/cbIsRead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
